@@ -1,0 +1,15 @@
+body {
+  /* background: red; */
+}
+
+h1 {
+  color: #222861;  
+}
+
+.intro {
+  height: 100vh;
+}
+
+.intro video {
+  max-height: 80vh;
+}
