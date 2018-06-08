@@ -1,15 +1,40 @@
 body {
   /* background: red; */
+  /* height: 500vh; */
 }
 
 h1 {
-  color: #222861;  
+  color: #222861;
 }
 
 .intro {
   height: 100vh;
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; */
+  background: #fff;
 }
 
 .intro video {
   max-height: 80vh;
+  max-width: 90vw;
+}
+
+.secondary {
+  min-height: 100vh;
+}
+
+.title {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 1s;
+}
+.title.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.help-block {
+  height: 2rem;
 }
