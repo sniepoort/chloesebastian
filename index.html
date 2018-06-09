@@ -6,7 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Chloé and Sebastian</title>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="material-kit.css">
   <link rel="stylesheet" href="style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="mailchimp.min.js"></script>
@@ -15,16 +18,18 @@
 
 <div class="container-fluid">
 
-  <div class="intro d-flex align-items-center justify-content-around flex-column">
+  <div class="intro d-flex align-items-center flex-column">
 
-    <video preload="auto" muted>
-      <!-- <source src="animation.webm" type="video/webm"> -->
+    <video preload="auto" muted="true" autoPlay="true" playsinline>
       <source src="animation.mp4" type="video/mp4">
+      <source src="animation.webm" type="video/webm">
     </video>
 
-    <h1 class="h2 mt-5 text-center title">Chloé Trieu and Sebastian Niepoort</h1>
+    <h1 class="h2 text-center title-names">Chloé Trieu and Sebastian Niepoort</h1>
   </div>
+</div>
 
+<div class="container-fluid secondary-wrapper">
   <div class="secondary mt-5 d-flex justify-content-center flex-column">
     <!-- <p class="lead">Website in progress! More info coming soon :)</p> -->
     <div class="text-center mb-3">
@@ -76,7 +81,7 @@
                 <li><input type="radio" value="No" name="MMERGE3" id="mce-MMERGE3-1"><label for="mce-MMERGE3-1">No</label></li>
               </ul>
               <input type="button" value="I can't come" name="subscribe" class="btn btn-danger decline mr-4">
-              <input type="submit" value="I'm coming!" name="subscribe" id="mc-embedded-subscribe" class="btn btn-success">
+              <input type="submit" value="I'm coming!" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary">
               <p class="help-block invisible lead mt-4"></p>
             </div>
           </form>
@@ -92,10 +97,10 @@
   <script type="text/javascript">
     $(document).ready(function(){
       var video = $('video')[0]
-      video.play()
+      // video.play()
 
       $('video').on('ended', function() {
-        $('.title').addClass('active')
+        $('.title-names').addClass('active')
       })
 
       var $form = $('#mc-embedded-subscribe-form')

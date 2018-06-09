@@ -1,6 +1,5 @@
 body {
-  /* background: red; */
-  /* height: 500vh; */
+  background: #fff;
 }
 
 h1 {
@@ -9,28 +8,30 @@ h1 {
 
 .intro {
   height: 100vh;
-  /* position: fixed;
-  top: 0;
-  left: 0;
-  right: 0; */
   background: #fff;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
 }
 
 .intro video {
   max-height: 80vh;
-  max-width: 90vw;
+  max-width: 100vw;
 }
 
 .secondary {
   min-height: 100vh;
 }
-
-.title {
+.secondary-wrapper {
+  background: #FBFAFA;
+}
+.title-names {
   visibility: hidden;
   opacity: 0;
+  -webkit-transition: visibility 1s, opacity 1s;
   transition: visibility 1s, opacity 1s;
 }
-.title.active {
+.title-names.active {
   visibility: visible;
   opacity: 1;
 }
