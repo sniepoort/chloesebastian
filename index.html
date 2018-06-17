@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overlay-active">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +10,28 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
   <link rel="stylesheet" href="material-kit.css">
+
+
   <link rel="stylesheet" href="style.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="mailchimp.min.js"></script>
+
+  <script type="text/javascript" src="fontawesome.min.js"></script>
+  <script type="text/javascript" src="fa-light.min.js"></script>
 </head>
 <body>
 
+<div class="overlay d-flex align-items-center justify-content-center">
+  <div class="text-center">
+    <i class="fal fa-spinner-third fa-spin fa-fw fa-4x text-danger"></i>
+    <p class="mt-3 lead">Loading some love...</p>
+  </div>
+</div>
+
 <div class="container-fluid">
 
-  <div class="intro d-flex align-items-center flex-column">
+  <div class="intro d-flex align-items-center flex-column full-page">
 
     <video preload="auto" muted="true" autoPlay="true" playsinline>
       <source src="animation.mp4" type="video/mp4">
@@ -30,7 +43,7 @@
 </div>
 
 <div class="container-fluid secondary-wrapper">
-  <div class="secondary mt-5 d-flex justify-content-center flex-column">
+  <div class="secondary mt-5 d-flex justify-content-center flex-column full-page">
     <!-- <p class="lead">Website in progress! More info coming soon :)</p> -->
     <div class="text-center mb-3">
 
@@ -38,12 +51,12 @@
         Weʼre getting married!  <br>
         And we would like to have you by our side.
       </p>
-      <p class="mb-5">
+      <p class="">
         Join us on the 17th of August in Copenhagen, <br>
         for a celebration of love, amour and kærlighed.
       </p>
       <p class="">
-        Let us know if you'll be joining us by filling in the form below! <br>
+        Let us know if you can make it by filling in the form below! <br>
         We'll keep you updated on this website with important info in the coming months.
       </p>
 
@@ -64,10 +77,10 @@
                   <input placeholder="Name" type="text" value="" name="NAME" class="form-control" id="mce-NAME">
                 </div>
               </div>
-              <div class="row mt-4 mb-4">
+              <div class="row mt-5 mb-4">
                 <div class="col">
                   <label for="mce-COMMENTS">Let us know who else is coming with you, or just say hello :) </label>
-                  <input type="text" value="" name="COMMENTS" class="form-control" id="mce-COMMENTS">
+                  <input type="text" value="" name="COMMENTS" class="form-control" id="mce-COMMENTS" placeholder="Comments">
                 </div>
               </div>
               <!-- <div id="mce-responses" class="clear">
@@ -80,8 +93,16 @@
                 <li><input type="radio" value="Yes" name="MMERGE3" id="mce-MMERGE3-0" checked="checked"><label for="mce-MMERGE3-0">Yes</label></li>
                 <li><input type="radio" value="No" name="MMERGE3" id="mce-MMERGE3-1"><label for="mce-MMERGE3-1">No</label></li>
               </ul>
-              <input type="button" value="I can't come" name="subscribe" class="btn btn-danger decline mr-4">
-              <input type="submit" value="I'm coming!" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary">
+              <button type="submit" name="subscribe" class="btn btn-danger decline mr-sm-4">
+                  <span>I can't come</span>
+                  <i class="fal fa-spinner-third fa-spin fa-fw btn-loader"></i>
+                  <i class="fal fa-check fa-fw btn-done"></i>
+              </button>
+              <button type="submit" name="subscribe" class="btn btn-primary" id="mc-embedded-subscribe">
+                  <span>I'm coming!</span>
+                  <i class="fal fa-spinner-third fa-spin fa-fw btn-loader"></i>
+                  <i class="fal fa-check fa-fw btn-done"></i>
+              </button>
               <p class="help-block invisible lead mt-4"></p>
             </div>
           </form>
@@ -91,13 +112,41 @@
 
       </div>
     </div>
+    <!-- <div class="text-center">
+      <p class="mb-2">There's more happenin' down there!</p>
+      <i class="fal fa-angle-double-down fa-3x animate-pulse"></i>
+    </div> -->
   </div>
 
 </div>
+
+<!-- <div class="container-fluid">
+  <div class="timetable full-page">
+
+  </div>
+</div> -->
+
   <script type="text/javascript">
+    $(window).on('beforeunload', function(){
+      $(window).scrollTop(0);
+    });
     $(document).ready(function(){
       var video = $('video')[0]
       // video.play()
+
+      // video.oncanplaythrough = function() {
+      //   $('html').removeClass('overlay-active')
+      //   setTimeout(function(){ video.play() }, 800)
+      // };
+
+      //IOS hack
+      var vidInterval = setInterval(function(){
+        var time = video.currentTime
+        if (time > 0) {
+          $('html').removeClass('overlay-active')
+          clearInterval(vidInterval)
+        }
+      }, 100)
 
       $('video').on('ended', function() {
         $('.title-names').addClass('active')
@@ -110,40 +159,30 @@
         $form.submit()
       })
 
+      $('button[name="subscribe"]').click(function(){
+        $(this).addClass('is-loading')
+      })
+
       $form.ajaxChimp({
         callback: function(response) {
           var $help = $('.help-block').addClass('invisible').text('')
           if (response.result === 'success') {
+            $form.find('button[name="subscribe"].is-loading').removeClass('is-loading').addClass('is-done')
             if ($form.find('#mce-MMERGE3-0').prop('checked')) {
               $help.text("Oh my, we're super excited! You'll hear more from us soon!").removeClass('invisible')
             } else {
               $help.text("What a shame! Hopefully we'll see you for our anniversary then!").removeClass('invisible')
             }
+            $form.find('button').attr('disabled', true)
           } else {
+            $form.find('button[name="subscribe"].is-loading').removeClass('is-loading')
             $help.text("Oops, something went wrong. Maybe you've already RSVP'ed ?").removeClass('invisible')
           }
+
+          $form.find('#mce-MMERGE3-0').prop('checked', true)
+          $form.find('#mce-MMERGE3-1').prop('checked', false)
         }
       });
-
-      // var scrollpos = window.pageYOffset/400;
-      // var targetscrollpos = scrollpos;
-      // var accel = 0;
-      //
-      // // ---- Values you can tweak: ----
-      // var accelamount = 1; //How fast the video will try to catch up with the target position. 1 = instantaneous, 0 = do nothing.
-      //
-      // // pause video on load
-      // var vid0 = $('video')[0]
-      // vid0.pause();
-      //
-      // window.onscroll = function(){
-      //   targetscrollpos = window.pageYOffset/400;
-      //   scrollpos += (targetscrollpos - scrollpos)*accelamount;
-      //
-      //   //update video playback
-      //   vid0.currentTime = scrollpos;
-      //   vid0.pause();
-      // };
 
     })
   </script>
