@@ -17,8 +17,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="mailchimp.min.js"></script>
 
-  <script type="text/javascript" src="fontawesome.min.js"></script>
-  <script type="text/javascript" src="fa-light.min.js"></script>
+  <script type="text/javascript" src="fontawesome-all.min.js"></script>
 </head>
 <body>
 
@@ -43,7 +42,7 @@
 </div>
 
 <div class="container-fluid secondary-wrapper">
-  <div class="secondary mt-5 d-flex justify-content-center flex-column full-page">
+  <div class="secondary mt-5 d-flex justify-content-center flex-column full-page py-5">
     <!-- <p class="lead">Website in progress! More info coming soon :)</p> -->
     <div class="text-center mb-3">
 
@@ -112,25 +111,84 @@
 
       </div>
     </div>
-    <!-- <div class="text-center">
+    <div class="text-center">
       <p class="mb-2">There's more happenin' down there!</p>
       <i class="fal fa-angle-double-down fa-3x animate-pulse"></i>
-    </div> -->
+    </div>
   </div>
 
 </div>
 
-<!-- <div class="container-fluid">
-  <div class="timetable full-page">
+<div class="container-fluid">
+  <div class="timetable mt-5 d-flex justify-content-center flex-column full-page">
+    <div class="">
+      <div class="container">
+        <h2 class="text-center mb-4">So, what's the plan?</h2>
+        <div class="row">
 
+          <div class="col-sm-6">
+            <p>
+              Oh boy, let us tell you, it's not easy to find a place for 70 people in the middle of Copenhagen!
+              Time was ticking fast a month or two ago, and we were starting to feel a liiiitle bit stressed.
+              As luck would have it, we decided to go on a little bike ride in the area close to where we live - and lo and behold,
+              we stumbled upon a gem of a café, tucked perfectly in between nature and the city. <br> <br>
+              <strong>Traktørstedet Vestamager</strong> (Granatvej 9, 2770 Kastrup), will be the official location for our wedding!
+              Here there will be room to eat delicious and simple food made from local products, have a few drinks, and dance the night away. <br>
+              But hey, what about a cermony and all that jazz? Fear not! We're working hard to figure out the details, but we know for certain that our ceremony will be close by,
+              in nature, and will be held before meeting for dinner at Traktørstedet. The rest is a suprise!
+            </p>
+          </div>
+          <div class="col-sm-6">
+            <p class="h5 mt-0 text-center mb-0">Timetable, so far</p>
+            <p class="text-muted text-center">August 17th, 2018</p>
+            <table class="table">
+              <thead>
+                <th>Time</th>
+                <th>Location</th>
+                <th>Details</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>15:30 - 17:45</td>
+                  <td>To be determined</td>
+                  <td>The ceremony! We can promise you this much: you will have fun, and you may get some tears in your eyes ;) </td>
+                </tr>
+                <tr>
+                  <td>18:00 - 23:00</td>
+                  <td>Traktørstedet</td>
+                  <td>Let's eat, drink, and be merry! And maybe hear some speeches?</td>
+                </tr>
+                <tr>
+                  <td>23:00 -  ...</td>
+                  <td>Traktørstedet</td>
+                  <td>Dance, dance, dance</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="location-map mt-4">
+
+      </div>
+    </div>
   </div>
-</div> -->
+</div>
+
+<footer class="container-fluid mt-5 pb-2 justify-content-center">
+  <span class="font-weight-bold">Made with <i class="fas fa-heart text-danger"></i> by Chloé and Sebastian</span>
+</footer>
 
   <script type="text/javascript">
     $(window).on('beforeunload', function(){
       $(window).scrollTop(0);
     });
     $(document).ready(function(){
+
+      maps()
+
       var video = $('video')[0]
       // video.play()
 
@@ -151,6 +209,11 @@
       $('video').on('ended', function() {
         $('.title-names').addClass('active')
       })
+
+      setTimeout(function(){
+        $('html').removeClass('overlay-active')
+        $('.title-names').addClass('active')
+      }, 15000)
 
       var $form = $('#mc-embedded-subscribe-form')
       $('.decline').click(function(){
@@ -185,6 +248,49 @@
       });
 
     })
+
+    function maps() {
+      var key = 'AIzaSyAqezY5SL-zfjp6j2o8cBEFOg_wNMpHj9A'
+
+      if (typeof window.google === 'undefined') {
+        $.getScript(
+          'https://maps.googleapis.com/maps/api/js?key=' + key
+        ).then(function() {
+          createMaps()
+        })
+      }
+    }
+
+    function createMaps() {
+      var $map = $('.location-map')
+
+      var waterColor = '#A0C1D1'
+
+      var styles = [ { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [ { "color": "#444444" } ] }, { "featureType": "landscape", "elementType": "all", "stylers": [ { "color": "#f2f2f2" } ] }, { "featureType": "poi", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road", "elementType": "all", "stylers": [ { "saturation": -100 }, { "lightness": 45 } ] }, { "featureType": "road.highway", "elementType": "all", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "featureType": "transit", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "water", "elementType": "all", "stylers": [ { "color": waterColor }, { "visibility": "on" } ] } ]
+
+      var mapOptions = {
+        zoom: 12,
+        center: {
+          lat: 55.614898,
+          lng: 12.574528
+        },
+        draggable: true,
+        clickableIcons: true,
+        scrollwheel: false,
+        disableDefaultUI: false,
+        styles: styles
+      }
+
+      var map = (this.map = new google.maps.Map($map[0], mapOptions))
+      var center = (this.center = map.getCenter())
+
+      //eslint-disable-next-line no-unused-vars
+      var marker = new google.maps.Marker({
+        map: map,
+        position: map.getCenter()
+      })
+
+    }
   </script>
 
 </body>
