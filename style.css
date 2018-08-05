@@ -6,6 +6,10 @@ h1 {
   color: #222861;
 }
 
+ul {
+  font-size: 14px;
+}
+
 .full-page {
   min-height: 100vh;
 }
